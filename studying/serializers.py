@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.relations import SlugRelatedField
 
 from studying.models import Course, Lesson
 
@@ -9,9 +10,15 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
         fields = '__all__'
 
-class LessonSerializer(serializers.ModelSerializer):
 
+class LessonListSerializer(serializers.ModelSerializer):
+    lesson = SlugRelatedField(slug_field="name", queryset=Course.objects.all())
     class Meta:
         model = Lesson
-        fields = '__all__'
+        fields = ('name',)
 
+class LessonDetailSerializer(serializers.ModelSerializer):
+    lesson = CourseSerializer()
+    class Meta:
+        model = Lesson
+        fields = ('name', 'lesson')
