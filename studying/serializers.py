@@ -19,17 +19,3 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_lessons_count(self, instance):
         return instance.lesson.count()
 
-
-# class CourseListSerializer(serializers.ModelSerializer):
-#     # lessons = SlugRelatedField(slug_field="name", queryset=Lesson.objects.all())
-#     class Meta:
-#         model = Course
-#         fields = ('name',)
-#
-# class CourseDetailSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Course
-#         fields = '__all__'
-#
-
-

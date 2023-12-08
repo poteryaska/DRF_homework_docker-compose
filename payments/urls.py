@@ -1,0 +1,15 @@
+from rest_framework.routers import DefaultRouter
+from django.urls import path
+from payments.apps import PaymentsConfig
+from payments.views import PaymentCreateAPIView, PaymentListAPIView, PaymentRetrieveAPIView
+from studying.views import CourseViewSet, LessonCreateAPIView, LessonListAPIView, LessonRetrieveAPIView, \
+    LessonDestroyAPIView, LessonUpdateAPIView
+
+app_name = PaymentsConfig.name
+
+
+urlpatterns = [
+    path('payment/create/', PaymentCreateAPIView.as_view(), name='payment-create'),
+    path('payment/', PaymentListAPIView.as_view(), name='payments'),
+    path('payment/<int:pk>/', PaymentRetrieveAPIView.as_view(), name='payment-get')
+]

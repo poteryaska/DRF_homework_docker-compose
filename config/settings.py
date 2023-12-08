@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'studying',
+    'payments',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/users/'
