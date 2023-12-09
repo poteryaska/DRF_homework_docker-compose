@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
+
 from studying.models import Course, Lesson
 
 NULLABLE = {'null': True, 'blank': True}
@@ -24,3 +26,12 @@ class Payment(models.Model):
         verbose_name = 'payments'
         verbose_name_plural = 'payments'
         ordering = ['-date']
+        constraints = [
+            models.CheckConstraint(
+                name="for_what",
+                check=(
+                    Q(course_payment__isnull=True, lesson_payment__isnull=False) |
+                    Q(course_payment__isnull=False, lesson_payment__isnull=True)
+                ),
+            )
+        ]

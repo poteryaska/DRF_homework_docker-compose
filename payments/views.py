@@ -19,3 +19,7 @@ class PaymentListAPIView(generics.ListAPIView):
 class PaymentRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = PaymentSerializer
     queryset = Payment.objects.all()
+
+
+class PaymentDestroyAPIView(generics.DestroyAPIView):
+    queryset = Payment.objects.all()
