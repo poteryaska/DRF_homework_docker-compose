@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -9,6 +10,7 @@ class Course(models.Model):
     name = models.CharField(max_length=255, verbose_name='course name')
     preview = models.ImageField(upload_to='courses/', verbose_name='course preview', **NULLABLE)
     description = models.TextField(verbose_name='course description')
+    course_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='owner course')
 
     def __str__(self):
         return f"{self.name}"
@@ -24,6 +26,7 @@ class Lesson(models.Model):
     preview = models.ImageField(upload_to='lessons/', verbose_name='lesson preview', **NULLABLE)
     video = models.URLField(verbose_name='lesson video', **NULLABLE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lesson', verbose_name='course')
+    lesson_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='owner lesson')
 
     def __str__(self):
         return f"{self.name}"
