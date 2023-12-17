@@ -9,7 +9,7 @@ from studying.serializers import CourseSerializer, LessonSerializer
 class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
-    # permission_classes = [IsAuthenticated]
+
     def get_permissions(self):
         if self.action == 'create':
             permission_classes = [IsAuthenticated]
