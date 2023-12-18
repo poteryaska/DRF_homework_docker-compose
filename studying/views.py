@@ -1,9 +1,9 @@
 from rest_framework import viewsets, generics
 from rest_framework.permissions import IsAuthenticated
 
-from studying.models import Course, Lesson
+from studying.models import Course, Lesson, Subscription
 from studying.permissions import IsModerator, IsCourseOwner, IsLessonOwner
-from studying.serializers import CourseSerializer, LessonSerializer
+from studying.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -20,6 +20,18 @@ class CourseViewSet(viewsets.ModelViewSet):
         elif self.action == 'destroy':
             permission_classes = [IsAuthenticated, IsCourseOwner]
         return [permission() for permission in permission_classes]
+
+class SubscriptionCreateAPIView(generics.CreateAPIView):
+    serializer_class = SubscriptionSerializer
+    queryset = Subscription.objects.all()
+    lookup_field = 'id'
+    def perform_create(self, serializer):
+        new_subscription = serializer.save(user=self.request.user)
+        new_subscription.save()
+
+class SubscriptionDestroyAPIView(generics.DestroyAPIView):
+    queryset = Subscription.objects.all()
+
 
 class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerializer
