@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'studying',
     'payments',
     'django_filters',
+    'drf_yasg',
     'rest_framework_simplejwt',
 ]
 
