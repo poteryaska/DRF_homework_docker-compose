@@ -11,7 +11,7 @@ class Course(models.Model):
     preview = models.ImageField(upload_to='courses/', verbose_name='course preview', **NULLABLE)
     description = models.TextField(verbose_name='course description')
     course_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='owner course')
-
+    price = models.CharField(default=100, **NULLABLE, verbose_name='price')
     def __str__(self):
         return f"{self.name}"
 

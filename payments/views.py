@@ -10,16 +10,19 @@ import stripe
 
 class PaymentCreateAPIView(generics.CreateAPIView):
     serializer_class = PaymentSerializer
+    queryset = Payment.objects.all()
 
-    def paument_create(self, serializer):
-        payment = serializer.save()
-        stripe.api_key = "pk_test_51OQ5WhB6xPKrOFgF4h2gDruKY4e99ratCgYbkh9IUc75yL4WrNzsVpEpbUHaTGJVnrzxegWwt4stS9Y9aAZzuBmE00WaW6nLh0"
-        pay = stripe.PaymentIntent.create(
-            amount=payment.amount,
-            currency='usd',
-            automatic_payment_methods={'enabled': True},)
-        pay.save()
-        return super().perform_create(serializer)
+    # def perform_create(self, serializer):
+
+    # def payment_create(self, serializer):
+    #     payment = serializer.save()
+    #     stripe.api_key = "pk_test_51OQ5WhB6xPKrOFgF4h2gDruKY4e99ratCgYbkh9IUc75yL4WrNzsVpEpbUHaTGJVnrzxegWwt4stS9Y9aAZzuBmE00WaW6nLh0"
+    #     pay = stripe.PaymentIntent.create(
+    #         amount=payment.amount,
+    #         currency='usd',
+    #         automatic_payment_methods={'enabled': True},)
+    #     pay.save()
+    #     return super().perform_create(serializer)
 
 
 class PaymentListAPIView(generics.ListAPIView):
