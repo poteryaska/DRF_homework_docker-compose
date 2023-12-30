@@ -6,7 +6,7 @@ from studying.models import Course, Lesson, Subscription
 from studying.paginators import StudyingPaginator
 from studying.permissions import IsModerator, IsCourseOwner, IsLessonOwner
 from studying.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
-
+from studying.tasks import sendmail
 
 class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
@@ -33,6 +33,15 @@ class SubscriptionCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         new_subscription = serializer.save(user=self.request.user)
         new_subscription.save()
+
+class SubscriptionUpdateView(generics.UpdateAPIView):
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
+    permission_classes = [IsModerator | IsCourseOwner]
+
+    def put(self, request, *args, **kwargs):
+        sendmail.delay()
+        return self.update(request, *args, **kwargs)
 
 class SubscriptionDestroyAPIView(generics.DestroyAPIView):
     queryset = Subscription.objects.all()
