@@ -86,11 +86,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('BASE_NAME'),
-        'USER': os.getenv('BASE_USER'),# Пользователь для подключения
-        'PASSWORD': os.getenv('BASE_PASSWORD'),# Пароль для этого пользователя
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'studying', # os.getenv('BASE_NAME'),
+            'USER': 'postgres', # os.getenv('BASE_USER'),# Пользователь для подключения
+            'PASSWORD': 'mysecretpassword', # os.getenv('BASE_PASSWORD'),# Пароль для этого пользователя
+            'HOST': 'db',
 
     }
 }
@@ -162,10 +163,10 @@ CUR_API_URL = 'https://api.currencyapi.com/'
 CUR_API_KEY = 'cur_live_QnClytMjlL5AnrEZEJ6TZrtLRJr7xmYifUd9hAog'
 
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = 'redis://localhost:6379' # Например, Redis, который по умолчанию работает на порту 6379
+CELERY_BROKER_URL = 'redis://redis:6379/0' # Например, Redis, который по умолчанию работает на порту 6379
 
 # URL-адрес брокера результатов, также Redis
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = "Europe/Moscow"
